@@ -28,7 +28,7 @@ app.get("/todos", (req, res) => {
     todos => {
       res.send({ todos });
     },
-    e => {
+    err => {
       res.status(400).send(err);
     }
   );
