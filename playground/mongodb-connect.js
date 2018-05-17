@@ -8,8 +8,8 @@ MongoClient.connect("mongodb://localhost:27017/TodoApp", (err, client) => {
   const db = client.db("TodoApp");
 
   db
-    .collection("Users")
-    .find({ name: "Stephen" })
+    .collection("users")
+    .find({ name: "Jen" })
     .toArray()
     .then(
       docs => {

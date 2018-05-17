@@ -8,7 +8,3 @@ mongoose.connect(
 module.exports = {
   mongoose
 };
-
-if (true) {
-  console.log("Insults are good!");
-}

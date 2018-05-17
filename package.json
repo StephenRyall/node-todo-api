@@ -14,16 +14,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.15.2",
     "expect": "^1.20.2",
-    "express": "^4.16.3",
+    "express": "^4.14.0",
     "mocha": "^3.0.2",
     "mongodb": "^3.1.0-beta4",
     "mongoose": "^4.5.9",
     "supertest": "^2.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.17.4",
+    "nodemon": "^1.10.2",
     "request": "^2.86.0"
   }
 }

@@ -57,4 +57,6 @@ app.listen(port, () => {
   console.log(`Started up at port ${port}.`);
 });
 
+console.log("Nuts");
+
 module.exports = { app };
