@@ -4,11 +4,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const { ObjectID } = require("mongodb");
 
-let { mongoose } = require("./db/mongoose");
-let { Todo } = require("./models/todo");
-let { User } = require("./models/user");
+const { mongoose } = require("./db/mongoose");
+const { Todo } = require("./models/todo");
+const { User } = require("./models/user");
+const { authenticate } = require("./middleware/authenticate");
 
-let app = express();
+const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
@@ -16,7 +17,7 @@ app.use(bodyParser.json());
 //POST TODOS
 
 app.post("/todos", (req, res) => {
-  let todo = new Todo({
+  const todo = new Todo({
     text: req.body.text
   });
   todo.save().then(
@@ -45,7 +46,7 @@ app.get("/todos", (req, res) => {
 //GET TODOS WITH ID
 
 app.get("/todos/:id", (req, res) => {
-  let id = req.params.id;
+  const id = req.params.id;
   if (!ObjectID.isValid(id)) {
     return res.status(404).send();
   }
@@ -64,7 +65,7 @@ app.get("/todos/:id", (req, res) => {
 //DELETE TODOS WITH ID
 
 app.delete("/todos/:id", (req, res) => {
-  let id = req.params.id;
+  const id = req.params.id;
   if (!ObjectID.isValid(id)) {
     return res.status(404).send();
   }
@@ -83,8 +84,8 @@ app.delete("/todos/:id", (req, res) => {
 //PATCH TODOS WITH ID
 
 app.patch("/todos/:id", (req, res) => {
-  let id = req.params.id;
-  let body = _.pick(req.body, ["text", "completed"]);
+  const id = req.params.id;
+  const body = _.pick(req.body, ["text", "completed"]);
   if (!ObjectID.isValid(id)) {
     return res.status(404).send();
   }
@@ -111,8 +112,8 @@ app.patch("/todos/:id", (req, res) => {
 //POST USERS
 
 app.post("/users", (req, res) => {
-  let body = _.pick(req.body, ["email", "password"]);
-  let user = new User(body);
+  const body = _.pick(req.body, ["email", "password"]);
+  const user = new User(body);
   user
     .save()
     .then(() => {
@@ -125,6 +126,10 @@ app.post("/users", (req, res) => {
     .catch(e => {
       res.status(400).send(e);
     });
+});
+
+app.get("/users/me", authenticate, (req, res) => {
+  res.send(req.user);
 });
 
 app.listen(port, () => {
